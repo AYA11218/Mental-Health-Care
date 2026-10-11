@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient", "psychiatrist", "admin"] },
+        "language": { "type": "string", "enum": ["en", "am"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Psychiatrist": {
+      "title": "Psychiatrist",
+      "description": "Psychiatrist professional profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "credentials": { "type": "string" },
+        "bio": { "type": "string" },
+        "specializations": { "type": "array" },
+        "languages": { "type": "array" },
+        "rating": { "type": "number" },
+        "experienceYears": { "type": "number" },
+        "hourlyRate": { "type": "number" },
+        "education": { "type": "string" },
+        "hospitalAffiliation": { "type": "string" },
+        "avatar": { "type": "string" }
+      },
+      "required": ["id", "name", "title", "credentials"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Counseling session booking between patient and psychiatrist",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "psychiatristId": { "type": "string" },
+        "psychiatristName": { "type": "string" },
+        "patientName": { "type": "string" },
+        "patientEmail": { "type": "string" },
+        "sessionDate": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "sessionType": { "type": "string", "enum": ["video", "in_person", "phone"] },
+        "notes": { "type": "string" },
+        "status": { "type": "string", "enum": ["confirmed", "cancelled", "completed"] },
+        "paymentStatus": { "type": "string", "enum": ["unpaid", "pending_verification", "paid"] },
+        "paymentMethod": { "type": "string", "enum": ["telebirr", "cbe_birr"] },
+        "paymentWalletNumber": { "type": "string" },
+        "paidAmountETB": { "type": "number" },
+        "transactionReference": { "type": "string" },
+        "paidAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "psychiatristId", "sessionDate", "startTime", "status"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Patient rating and comment for a psychiatrist after a session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "psychiatristId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "isAnonymous": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "appointmentId": { "type": "string" },
+        "verifiedSession": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "psychiatristId", "userId", "rating", "comment", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private profile of the authenticated user"
+    },
+    "/psychiatrists/{psychiatristId}": {
+      "schema": "Psychiatrist",
+      "description": "Public catalog of psychiatrists and their credentials"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Booked appointments, accessible by the patient or psychiatrist"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Patient ratings and comments for a psychiatrist"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "SelamCare - Psychiatric & Counseling Services",
+  "description": "Comprehensive psychiatric counseling platform with bilingual English and Amharic support, doctor profiles, secure scheduling, and calendar appointments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
